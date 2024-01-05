@@ -14,5 +14,7 @@ parameters:
 #
     excludePaths:
         - ./vendor/*
+        - ./storage/*
+        - ./public/*
 #
 #    checkMissingIterableValueType: false
