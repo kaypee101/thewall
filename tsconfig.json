@@ -14,7 +14,13 @@
         "paths": {
             "@/*": ["./resources/js/*"],
             "ziggy-js": ["./vendor/tightenco/ziggy"]
-        }
+        },
+        "allowImportingTsExtensions": true
     },
-    "include": ["resources/js/**/*.ts", "resources/js/**/*.d.ts", "resources/js/**/*.vue"]
+    "include": [
+        "resources/js/**/*.ts",
+        "resources/js/**/*.d.ts",
+        "resources/js/**/*.vue",
+        "node_modules/@fortawesome"
+    ]
 }

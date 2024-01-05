@@ -1,11 +1,13 @@
 <template>
-    <Head title="Dashboard" />
+    <Head title="About us" />
 
     <AuthenticatedLayout>
-        <template #header> Dashboard </template>
+        <template #header> About us </template>
 
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-            <div class="p-6 border-b border-gray-200">You're logged in!</div>
+            <div class="p-6 border-b border-gray-200">
+                Sample static text page
+            </div>
         </div>
     </AuthenticatedLayout>
 </template>
