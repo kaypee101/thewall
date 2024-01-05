@@ -48,5 +48,8 @@ route:
 test:
 	 ./vendor/bin/sail artisan test
 
+check-php:
+	 ./vendor/bin/sail php ./vendor/bin/phpstan analyze .
+
 user:
 	sudo chown -R $(shell whoami):$(shell whoami) .
