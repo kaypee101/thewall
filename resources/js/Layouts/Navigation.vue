@@ -27,7 +27,7 @@
                 :active="route().current('dashboard')"
             >
                 <font-awesome-icon :icon="faTableColumns" />
-                Dashboard
+                {{ trans("dashboard.dashboard") }}
             </nav-link>
 
             <nav-link
@@ -35,12 +35,16 @@
                 :active="route().current('admin.posts.index')"
             >
                 <font-awesome-icon :icon="faMask" />
-                Posts
+                {{
+                    trans("post.list, :title", {
+                        title: "Posts",
+                    })
+                }}
             </nav-link>
 
             <nav-link :href="route('about')" :active="route().current('about')">
                 <font-awesome-icon :icon="faAddressCard" />
-                About us
+                {{ trans("about.about") }}
             </nav-link>
 
             <a
@@ -78,9 +82,9 @@
 
 <script setup lang="ts">
 import NavLink from "@/Components/NavLink.vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import { trans } from "laravel-vue-i18n";
 
 import {
     faTableColumns,

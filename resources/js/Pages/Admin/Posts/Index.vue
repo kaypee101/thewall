@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import { computed, onMounted, watch } from "vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Pagination from "@/Components/Pagination.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { onMounted } from "vue";
 
 import { MessageInterface } from "@/Interface/MessageInterface.ts";
 import { useFlashMessage } from "@/Interface/FlashMessageInterface.ts";
-import { watch } from "vue";
+import { trans } from "laravel-vue-i18n";
 
 const props = defineProps({
     auth: {
@@ -30,8 +30,13 @@ const props = defineProps({
     },
 });
 const form = useForm({});
-
 const { showFlashMessage } = useFlashMessage();
+const pageTitle = computed(() => {
+    return trans("post.list, :title", {
+        title: props.title,
+    });
+});
+
 onMounted(() => {
     if (props.flash.message?.id) {
         showFlashMessage(props.flash);
@@ -55,11 +60,11 @@ function destroy(id: number) {
 <style scoped></style>
 
 <template>
-    <Head :title="props.title" />
+    <Head :title="pageTitle" />
     <AuthenticatedLayout :auth="props.auth">
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                {{ props.title + " Index" }}
+                {{ pageTitle }}
             </h2>
         </template>
 
@@ -70,7 +75,11 @@ function destroy(id: number) {
                         <div class="mb-2">
                             <Link :href="route('admin.posts.create')">
                                 <PrimaryButton :buttonType="'button'">
-                                    {{ "Add " + props.title }}
+                                    {{
+                                        trans("post.add, :title", {
+                                            title: props.title,
+                                        })
+                                    }}
                                 </PrimaryButton>
                             </Link>
                         </div>
@@ -86,13 +95,13 @@ function destroy(id: number) {
                                     <tr>
                                         <th scope="col" class="px-6 py-3">#</th>
                                         <th scope="col" class="px-6 py-3">
-                                            Name
+                                            {{ trans("post.name") }}
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Edit
+                                            {{ trans("post.edit") }}
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Delete
+                                            {{ trans("post.delete") }}
                                         </th>
                                     </tr>
                                 </thead>
@@ -124,7 +133,8 @@ function destroy(id: number) {
                                                     )
                                                 "
                                                 class="px-4 py-2 text-white bg-blue-600 rounded-lg"
-                                                >Edit</Link
+                                            >
+                                                {{ trans("post.edit") }}</Link
                                             >
                                         </td>
                                         <td class="px-6 py-4">
@@ -133,7 +143,7 @@ function destroy(id: number) {
                                                 class="bg-red-700"
                                                 @click="destroy(post.id)"
                                             >
-                                                Delete
+                                                {{ trans("post.delete") }}
                                             </PrimaryButton>
                                         </td>
                                     </tr>

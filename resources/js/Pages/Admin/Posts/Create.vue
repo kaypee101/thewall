@@ -5,7 +5,8 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import InputError from "@/Components/InputError.vue";
 import { Head, useForm } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { trans } from "laravel-vue-i18n";
+import { computed } from "vue";
 
 const props = defineProps({
     auth: {
@@ -21,23 +22,26 @@ const props = defineProps({
         default: () => ({}),
     },
 });
-
 const form = useForm({
     title: "",
 });
-
 const submit = () => {
     form.post(route("admin.posts.store"));
 };
+const pageTitle = computed(() => {
+    return trans("post.create, :title", {
+        title: props.title,
+    });
+});
 </script>
 
 <template>
-    <Head :title="props.title + ' Create'" />
+    <Head :title="pageTitle" />
 
     <AuthenticatedLayout :auth="props.auth">
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                {{ props.title + " Create" }}
+                {{ pageTitle }}
             </h2>
         </template>
 
@@ -70,7 +74,7 @@ const submit = () => {
                                 :class="{ 'opacity-25': form.processing }"
                                 :disabled="form.processing"
                             >
-                                Submit
+                                {{ trans("post.submit") }}
                             </PrimaryButton>
                         </form>
                     </div>

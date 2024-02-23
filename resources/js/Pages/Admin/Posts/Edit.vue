@@ -5,7 +5,8 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import InputError from "@/Components/InputError.vue";
 import { Head, useForm } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { trans } from "laravel-vue-i18n";
+import { computed } from "vue";
 
 const props = defineProps({
     auth: {
@@ -25,23 +26,26 @@ const props = defineProps({
         default: () => ({}),
     },
 });
-
 const form = useForm({
     title: props.post.data.title,
 });
-
 const submit = () => {
     form.put(route("admin.posts.update", props.post.data.id));
 };
+const pageTitle = computed(() => {
+    return trans("post.edit, :title", {
+        title: props.title,
+    });
+});
 </script>
 
 <template>
-    <Head :title="props.title + ' Edit'" />
+    <Head :title="pageTitle" />
 
     <AuthenticatedLayout :auth="props.auth">
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
-                {{ props.title + " Edit" }}
+                {{ pageTitle }}
             </h2>
         </template>
 
@@ -74,7 +78,7 @@ const submit = () => {
                                 class="mt-3"
                                 :disabled="form.processing"
                             >
-                                Submit
+                                {{ trans("post.update") }}
                             </PrimaryButton>
                         </form>
                     </div>

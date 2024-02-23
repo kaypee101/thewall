@@ -6,9 +6,14 @@ import { createInertiaApp } from "@inertiajs/vue3";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy/dist/vue.m";
 
+import axios from "axios";
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
+
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import { i18nVue } from "laravel-vue-i18n";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
@@ -35,6 +40,13 @@ createInertiaApp({
                 //     }
                 //     return toast;
                 // },
+            })
+            .use(i18nVue, {
+                fallbackLang: "en",
+                resolve: async (lang: string) => {
+                    const langs: any = import.meta.glob("../../lang/*.json");
+                    return await langs[`../../lang/${lang}.json`]();
+                },
             })
             .use(plugin)
             .use(ZiggyVue)
