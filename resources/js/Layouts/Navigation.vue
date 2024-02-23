@@ -30,6 +30,14 @@
                 Dashboard
             </nav-link>
 
+            <nav-link
+                :href="route('admin.posts.index')"
+                :active="route().current('admin.posts.index')"
+            >
+                <font-awesome-icon :icon="faMask" />
+                Posts
+            </nav-link>
+
             <nav-link :href="route('about')" :active="route().current('about')">
                 <font-awesome-icon :icon="faAddressCard" />
                 About us
@@ -78,6 +86,7 @@ import {
     faTableColumns,
     faAddressCard,
     faCircleChevronDown,
+    faMask,
 } from "@fortawesome/free-solid-svg-icons";
 
 const page = usePage();
